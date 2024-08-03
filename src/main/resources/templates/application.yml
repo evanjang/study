@@ -1,0 +1,49 @@
+server:
+  port: 8090
+# database init, supports mysql too
+spring:
+  database : mysql
+  datasource:
+    url: ${MYSQL_URL:jdbc:mysql://localhost/petclinic}
+    username : ${MYSQL_USER:petclinic}
+    password : ${MYSQL_PASS:petclinic}
+  sql:
+    init:
+      schema-locations: classpath*:db/${database}/schema.sql
+      data-locations: classpath*:db/${database}/data.sql
+
+  # Web
+  thymeleaf:
+    mode: HTML
+
+  # JPA
+  jpa:
+    hibernate:
+      ddl-auto: none
+    open-in-view: true
+
+  # Internationalization
+  messages:
+    basename: messages/messages
+
+  # Actuator
+  management:
+    endpoints:
+      web:
+        exposure:
+          include: '*'
+
+  # Logging
+  logging:
+    level:
+      org:
+        springframework: INFO
+      # org.springframework.web: DEBUG
+      # org.springframework.context.annotation: TRACE
+
+  # Maximum time static resources should be cached
+  web:
+    resources:
+      cache:
+        cachecontrol:
+          max-age: 12h
